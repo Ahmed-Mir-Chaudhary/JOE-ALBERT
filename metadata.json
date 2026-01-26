@@ -1,0 +1,7 @@
+{
+  "name": "Joe Albert Signature Studios",
+  "description": "A luxurious, cinematic 3D photography portfolio website featuring immersive React Three Fiber scenes and elegant minimalist design.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
