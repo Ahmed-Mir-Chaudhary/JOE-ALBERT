@@ -32,10 +32,11 @@ export const Navbar: React.FC = () => {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'py-4 bg-white/90 backdrop-blur-md shadow-sm' : 'py-8 bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <a href="#" className="flex items-center gap-3 group">
-          <div className={`w-10 h-10 rounded-full ${logoBgClass} flex items-center justify-center transition-all group-hover:rotate-[360deg] duration-700`}>
-            <Camera size={20} />
-          </div>
-          <span className={`text-xl font-display font-bold tracking-tighter transition-colors ${textColorClass}`}>JOE ALBERT</span>
+          <img
+            src="/assets/logo.png"
+            alt="Joe Albert Signature"
+            className={`h-12 w-auto transition-all duration-500 ${scrolled ? '' : 'brightness-0 invert'}`}
+          />
         </a>
 
         {/* Desktop Nav */}

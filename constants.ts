@@ -2,6 +2,7 @@
 import { Photo, Service, Product, BlogPost } from './types';
 
 export const PHOTOS: Photo[] = [
+  // New Local Portraits
   {
     id: '1',
     url: '/assets/portrait-1.png',
@@ -41,6 +42,71 @@ export const PHOTOS: Photo[] = [
     title: 'Creative Professional',
     description: 'A warm, engaging portrait with dramatic lighting, perfect for creative industry leaders.',
     metadata: { camera: 'Leica SL2', lens: '90mm f/2 Summicron', settings: '1/160s • f/2.0 • ISO 320' }
+  },
+  // Original Unsplash Collection
+  {
+    id: '6',
+    url: 'https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?auto=format&fit=crop&q=80&w=1000',
+    category: 'Studio',
+    title: 'The Quiet Moment',
+    description: 'A study of light and shadow, capturing the serene intensity of a fleeting moment in the studio.',
+    metadata: { camera: 'Sony A7R IV', lens: '85mm f/1.4 G-Master', settings: '1/200s • f/2.0 • ISO 100' }
+  },
+  {
+    id: '7',
+    url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=1000',
+    category: 'Headshots',
+    title: 'Executive Presence',
+    description: 'Professional headshot focusing on confidence and clarity for high-level corporate identity.',
+    metadata: { camera: 'Canon EOS R5', lens: '100mm f/2.8L Macro', settings: '1/160s • f/4.0 • ISO 200' }
+  },
+  {
+    id: '8',
+    url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1000',
+    category: 'Corporate',
+    title: 'The Boardroom',
+    description: 'Wide-angle perspective of architectural excellence in the modern corporate workplace.',
+    metadata: { camera: 'Fujifilm GFX 100S', lens: '23mm f/4 R WR', settings: '1/60s • f/8.0 • ISO 400' }
+  },
+  {
+    id: '9',
+    url: 'https://images.unsplash.com/photo-1449034446853-66c86144b0ad?auto=format&fit=crop&q=80&w=1000',
+    category: 'Location',
+    title: 'Urban Flow',
+    description: 'Cinematic street photography capturing the vibrant energy of the golden hour in the city.',
+    metadata: { camera: 'Leica Q2', lens: '28mm Summilux f/1.7', settings: '1/1000s • f/1.7 • ISO 100' }
+  },
+  {
+    id: '10',
+    url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1000',
+    category: 'Real Estate',
+    title: 'Modern Living',
+    description: 'Luxury interior photography emphasizing space, light, and architectural harmony.',
+    metadata: { camera: 'Nikon Z9', lens: '14-24mm f/2.8S', settings: '1/15s • f/11 • ISO 100' }
+  },
+  {
+    id: '11',
+    url: 'https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?auto=format&fit=crop&q=80&w=1000',
+    category: 'Studio',
+    title: 'Soft Light',
+    description: 'Minimalist portraiture exploring the delicate texture of skin under diffused lighting.',
+    metadata: { camera: 'Sony A7R IV', lens: '50mm f/1.2 G-Master', settings: '1/250s • f/1.2 • ISO 50' }
+  },
+  {
+    id: '12',
+    url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=1000',
+    category: 'Headshots',
+    title: 'Confident Gaze',
+    description: 'Engaging portraiture that breaks the fourth wall, establishing a direct connection with the viewer.',
+    metadata: { camera: 'Canon EOS R5', lens: '85mm f/1.2L II', settings: '1/200s • f/1.8 • ISO 100' }
+  },
+  {
+    id: '13',
+    url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1000',
+    category: 'Location',
+    title: 'Mountain Echo',
+    description: 'Breathtaking landscape photography from the heart of the Rockies during blue hour.',
+    metadata: { camera: 'Fujifilm GFX 100S', lens: '45-100mm f/4', settings: '30s • f/16 • ISO 100' }
   },
 ];
 
