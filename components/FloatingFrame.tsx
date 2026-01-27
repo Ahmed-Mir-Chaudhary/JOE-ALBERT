@@ -1,6 +1,7 @@
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useFrame, useLoader } from '@react-three/fiber';
+import { useCursor, Image } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface FloatingFrameProps {
@@ -11,53 +12,72 @@ interface FloatingFrameProps {
 }
 
 export const FloatingFrame: React.FC<FloatingFrameProps> = ({ url, position, rotation = [0, 0, 0], scale = [1, 1, 1] }) => {
-  const meshRef = useRef<THREE.Mesh>(null!);
-  const texture = useLoader(THREE.TextureLoader, url);
+  const meshRef = useRef<THREE.Group>(null!);
+  const [hovered, setHover] = useState(false);
+
+  useCursor(hovered);
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
-    const { x, y } = state.pointer; // Normalized pointer: -1 to +1
+    const { x, y } = state.pointer;
 
-    // Sophisticated floating animation logic
-    const floatOffset = Math.sin(t * 0.4 + position[0]) * 0.3;
-    const driftRotation = Math.cos(t * 0.25) * 0.08;
+    // Gentle floating
+    // meshRef.current.position.y = position[1] + Math.sin(t * 0.5 + position[0]) * 0.1;
 
-    // Pronounced Interactive Parallax
-    // depthFactor ensures frames at different depths move at different speeds for a true 3D feel.
-    // Frames closer to the camera (higher Z) move more aggressively.
-    const depthFactor = 1.2 + (position[2] * 0.4); 
-    
-    const targetX = position[0] + x * 1.4 * depthFactor;
-    const targetY = position[1] + floatOffset + y * 1.4 * depthFactor;
-    const targetZ = position[2] + (Math.abs(x) + Math.abs(y)) * 0.8;
+    // Interactive tilting with dampening
+    const targetRotX = rotation[0] - y * 0.1;
+    const targetRotY = rotation[1] + x * 0.1;
 
-    // Smoothly interpolate to target position with a cinematic damping
-    meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, targetX, 0.04);
-    meshRef.current.position.y = THREE.MathUtils.lerp(meshRef.current.position.y, targetY, 0.04);
-    meshRef.current.position.z = THREE.MathUtils.lerp(meshRef.current.position.z, targetZ, 0.04);
-
-    // Highly responsive rotation tilt based on mouse movement
-    const targetRotY = rotation[1] + driftRotation + x * 0.3;
-    const targetRotX = rotation[0] - y * 0.3;
-    
-    meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, targetRotY, 0.06);
-    meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, targetRotX, 0.06);
+    meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, targetRotX, 0.05);
+    meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, targetRotY, 0.05);
   });
 
   return (
-    <mesh ref={meshRef} position={position} rotation={rotation} scale={scale}>
-      <planeGeometry args={[2.2, 3.2]} />
-      {/* Frame border mesh with subtle depth */}
-      <mesh position={[0, 0, -0.015]}>
-        <planeGeometry args={[2.35, 3.35]} />
-        <meshBasicMaterial color="white" />
+    <group
+      ref={meshRef}
+      position={position}
+      rotation={rotation}
+      scale={scale}
+      onPointerOver={() => setHover(true)}
+      onPointerOut={() => setHover(false)}
+    >
+      {/* Main Image */}
+      <Image
+        url={url}
+        transparent
+        opacity={0.9}
+        scale={[2, 3]}
+        toneMapped={false}
+      />
+
+      {/* Gold Frame Border */}
+      <mesh position={[0, 0, -0.01]}>
+        <boxGeometry args={[2.1, 3.1, 0.05]} />
+        <meshStandardMaterial
+          color="#D4AF37"
+          metalness={0.8}
+          roughness={0.2}
+        />
       </mesh>
-      {/* Subtle drop shadow plane for extra depth perception */}
-      <mesh position={[0.1, -0.1, -0.03]} scale={[1.05, 1.05, 1]}>
-        <planeGeometry args={[2.2, 3.2]} />
-        <meshBasicMaterial color="black" transparent opacity={0.15} />
+
+      {/* Backing Board */}
+      <mesh position={[0, 0, -0.04]}>
+        <boxGeometry args={[2.08, 3.08, 0.01]} />
+        <meshStandardMaterial color="#1a1a1a" />
       </mesh>
-      <meshBasicMaterial map={texture} side={THREE.DoubleSide} transparent opacity={0.98} />
-    </mesh>
+
+      {/* Glass Reflection Simulation (Subtle) */}
+      <mesh position={[0, 0, 0.01]}>
+        <planeGeometry args={[2, 3]} />
+        <meshPhysicalMaterial
+          transparent
+          opacity={0.1}
+          roughness={0}
+          metalness={0.9}
+          clearcoat={1}
+          color="white"
+        />
+      </mesh>
+    </group>
   );
 };
